@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Splitline — Workout Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== AUTH SCREEN ===================== -->
+  <section id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <div class="brand">
+        <span class="brand-mark">/</span>Splitline
+      </div>
+      <p class="auth-tagline">Plan your week. Track your splits. Rest on the clock.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Log in</button>
+        <button class="auth-tab" data-tab="register">Register</button>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <label>Email
+          <input type="email" id="login-email" required autocomplete="email" />
+        </label>
+        <label>Password
+          <input type="password" id="login-password" required autocomplete="current-password" />
+        </label>
+        <button type="submit" class="btn btn-primary">Log in</button>
+        <p class="auth-error" id="login-error"></p>
+      </form>
+
+      <form id="register-form" class="auth-form hidden">
+        <label>Email
+          <input type="email" id="register-email" required autocomplete="email" />
+        </label>
+        <label>Password <span class="hint">(min 6 characters)</span>
+          <input type="password" id="register-password" required minlength="6" autocomplete="new-password" />
+        </label>
+        <button type="submit" class="btn btn-primary">Create account</button>
+        <p class="auth-error" id="register-error"></p>
+        <p class="auth-note" id="register-note"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== APP SHELL ===================== -->
+  <div id="app-shell" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">/</span>Splitline</div>
+      <nav class="nav">
+        <button class="nav-link active" data-view="schedule">Schedule</button>
+        <button class="nav-link" data-view="all">All workouts</button>
+      </nav>
+      <div class="sidebar-footer">
+        <p class="user-email" id="user-email"></p>
+        <button id="logout-btn" class="btn btn-ghost">Log out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+
+      <!-- SCHEDULE VIEW -->
+      <section id="view-schedule" class="view">
+        <header class="view-header">
+          <h1>Your week</h1>
+          <p class="subtitle">Assign a workout to any day, then start it when it's time to train.</p>
+        </header>
+        <div class="week-grid" id="week-grid"><!-- 7 day cards injected by script.js --></div>
+      </section>
+
+      <!-- ALL WORKOUTS VIEW -->
+      <section id="view-all" class="view hidden">
+        <header class="view-header">
+          <h1>All workouts</h1>
+          <p class="subtitle">Every workout you've built, across every day.</p>
+        </header>
+        <div class="workout-list" id="workout-list"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===================== WORKOUT EDITOR MODAL ===================== -->
+  <div id="editor-modal" class="modal-backdrop hidden">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="editor-title">Workout</h2>
+        <button class="icon-btn" id="editor-close" aria-label="Close">&times;</button>
+      </div>
+
+      <div id="editor-empty" class="editor-empty hidden">
+        <p>No workout assigned to <strong id="editor-day-label"></strong> yet.</p>
+        <label>Workout name
+          <input type="text" id="new-workout-name" placeholder="e.g. Push Day" />
+        </label>
+        <button class="btn btn-primary" id="create-workout-btn">Create workout</button>
+      </div>
+
+      <div id="editor-body" class="hidden">
+        <div class="editor-toprow">
+          <input type="text" id="workout-name-input" class="workout-name-input" />
+          <button class="btn btn-primary" id="start-workout-btn">▶ Start workout</button>
+          <button class="btn btn-danger-ghost" id="delete-workout-btn">Delete workout</button>
+        </div>
+
+        <ul class="split-list" id="split-list"><!-- splits injected --></ul>
+
+        <form id="add-split-form" class="add-split-form">
+          <input type="text" id="split-name" placeholder="Exercise (e.g. Bench press)" required />
+          <input type="number" id="split-sets" placeholder="Sets" min="1" />
+          <input type="number" id="split-reps" placeholder="Reps" min="1" />
+          <input type="number" id="split-rest" placeholder="Rest (sec)" min="0" value="60" />
+          <button type="submit" class="btn btn-secondary">Add split</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== RUN WORKOUT MODAL ===================== -->
+  <div id="run-modal" class="modal-backdrop hidden">
+    <div class="modal run-modal">
+      <div class="modal-head">
+        <h2 id="run-workout-name">Workout</h2>
+        <button class="icon-btn" id="run-close" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="run-body">
+        <p class="run-progress" id="run-progress"></p>
+
+        <div id="run-phase-split" class="run-phase">
+          <p class="run-label">Current split</p>
+          <h3 class="run-split-name" id="run-split-name"></h3>
+          <p class="run-split-meta" id="run-split-meta"></p>
+          <button class="btn btn-primary btn-large" id="finish-split-btn">Finish split → start rest</button>
+        </div>
+
+        <div id="run-phase-rest" class="run-phase hidden">
+          <p class="run-label">Resting before</p>
+          <h3 class="run-split-name" id="run-next-split-name"></h3>
+          <div class="timer-display" id="timer-display">60</div>
+          <div class="run-rest-actions">
+            <button class="btn btn-ghost" id="rest-add-15">+15s</button>
+            <button class="btn btn-primary" id="skip-rest-btn">Skip rest →</button>
+          </div>
+        </div>
+
+        <div id="run-phase-done" class="run-phase hidden">
+          <p class="run-label">Nice work</p>
+          <h3 class="run-split-name">Workout complete</h3>
+          <button class="btn btn-primary btn-large" id="run-done-btn">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
