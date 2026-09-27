@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Splitline — Workout Tracker
 
 A weekly workout planner: assign a different workout to each day of the week,
@@ -70,3 +71,6 @@ supabase-schema.sql – table definitions + Row Level Security policies
 - Each day currently holds one workout, which is what "align different
   workouts for different days" means here — e.g. Push on Monday, Pull on
   Tuesday, Legs on Thursday, and so on.
+=======
+# WorkoutApp
+>>>>>>> 31e50fc7c0b6d1a0aa201113463fb8e896865a30
