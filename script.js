@@ -14,6 +14,29 @@ let editorWorkout = null;    // workout object currently open in the editor moda
 
 let runState = null;         // { workout, index, timer, remaining }
 
+// ---------- theme (light/dark) ----------
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  const label = theme === "dark" ? "☀️ Light mode" : "🌙 Dark mode";
+  const t1 = document.getElementById("theme-toggle");
+  const t2 = document.getElementById("auth-theme-toggle");
+  if (t1) t1.textContent = label;
+  if (t2) t2.textContent = label;
+  try { localStorage.setItem("splitline-theme", theme); } catch (_) {}
+}
+function toggleTheme() {
+  const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  applyTheme(current === "dark" ? "light" : "dark");
+}
+(function initTheme() {
+  let saved = null;
+  try { saved = localStorage.getItem("splitline-theme"); } catch (_) {}
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(saved || (prefersDark ? "dark" : "light"));
+})();
+document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+document.getElementById("auth-theme-toggle").addEventListener("click", toggleTheme);
+
 // ---------- small DOM helpers ----------
 const $ = (id) => document.getElementById(id);
 function show(el) { el.classList.remove("hidden"); }
