@@ -3,7 +3,7 @@
 This is an app that allows you to track your workout routine throughout the week. Set split times and sets for different workouts. Allow yourself to train at your best capacity without having to remember every little thing!
 
 **Live app:** https://shiny-sprite-1946cf.netlify.app/
-**Demo video:** [add YouTube link here]
+**Demo video:** https://www.youtube.com/watch?v=VRARCRmZswE
 
 ## What it does
 
@@ -25,4 +25,4 @@ This is an app that allows you to track your workout routine throughout the week
 1. Create a free project at [supabase.com](https://supabase.com).
 2. In the SQL Editor, run the contents of `supabase-schema.sql`.
 3. Copy your Project URL and anon key (Project Settings → API) into `config.js`.
-4. Open `index.html` in a browser, or deploy the folder to Netlify.
+4. Open `index.html` in a browser, or deploy the folder to Netlify.g
