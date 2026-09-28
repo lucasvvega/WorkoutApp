@@ -7,5 +7,5 @@
 // Level Security (see supabase-schema.sql) is what protects data.
 // ============================================================
 const SUPABASE_URL = "https://fwixgemvtfatyacczzpi.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_BcOsR9pcY2069mId-vsTtA_Fv5j54mo";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ3aXhnZW12dGZhdHlhY2N6enBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0NjExMDAsImV4cCI6MjEwNjAzNzEwMH0.D5L3FM8Vl0cZ7OlhZ_ZkHZXQMh9Mci1KoLoJGAaL71k";
 ``
